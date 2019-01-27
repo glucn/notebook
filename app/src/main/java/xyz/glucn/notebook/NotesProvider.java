@@ -35,8 +35,14 @@ public class NotesProvider extends ContentProvider {
 
     @androidx.annotation.Nullable
     @Override
-    public Cursor query(@androidx.annotation.NonNull Uri uri, @androidx.annotation.Nullable String[] projection, @androidx.annotation.Nullable String selection, @androidx.annotation.Nullable String[] selectionArgs, @androidx.annotation.Nullable String sortOrder) {
-        return null;
+    public Cursor query(@androidx.annotation.NonNull Uri _uri,
+                        @androidx.annotation.Nullable String[] _projection,
+                        @androidx.annotation.Nullable String selection,
+                        @androidx.annotation.Nullable String[] selectionArgs,
+                        @androidx.annotation.Nullable String _sortOrder) {
+        return database.query(DBOpenHelper.TABLE_NOTES, DBOpenHelper.ALL_COLUMNS,
+                selection, selectionArgs, null, null,
+                DBOpenHelper.NOTE_CREATED + " DESC");
     }
 
     @androidx.annotation.Nullable
@@ -47,17 +53,24 @@ public class NotesProvider extends ContentProvider {
 
     @androidx.annotation.Nullable
     @Override
-    public Uri insert(@androidx.annotation.NonNull Uri uri, @androidx.annotation.Nullable ContentValues values) {
-        return null;
+    public Uri insert(@androidx.annotation.NonNull Uri _uri,
+                      @androidx.annotation.Nullable ContentValues values) {
+        long id = database.insert(DBOpenHelper.TABLE_NOTES, null, values);
+        return Uri.parse(BASE_PATH + "/" + id);
     }
 
     @Override
-    public int delete(@androidx.annotation.NonNull Uri uri, @androidx.annotation.Nullable String selection, @androidx.annotation.Nullable String[] selectionArgs) {
-        return 0;
+    public int delete(@androidx.annotation.NonNull Uri _uri,
+                      @androidx.annotation.Nullable String selection,
+                      @androidx.annotation.Nullable String[] selectionArgs) {
+        return database.delete(DBOpenHelper.TABLE_NOTES, selection, selectionArgs);
     }
 
     @Override
-    public int update(@androidx.annotation.NonNull Uri uri, @androidx.annotation.Nullable ContentValues values, @androidx.annotation.Nullable String selection, @androidx.annotation.Nullable String[] selectionArgs) {
-        return 0;
+    public int update(@androidx.annotation.NonNull Uri _uri,
+                      @androidx.annotation.Nullable ContentValues values,
+                      @androidx.annotation.Nullable String selection,
+                      @androidx.annotation.Nullable String[] selectionArgs) {
+        return database.update(DBOpenHelper.TABLE_NOTES, values, selection, selectionArgs);
     }
 }
