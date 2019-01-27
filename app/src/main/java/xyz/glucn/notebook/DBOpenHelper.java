@@ -24,7 +24,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                     NOTE_CREATED + " TEXT default CURRENT_TIMESTAMP" +
                     ")";
 
-    public DBOpenHelper(Context context) {
+    public DBOpenHelper(@androidx.annotation.Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
