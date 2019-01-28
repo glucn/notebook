@@ -7,6 +7,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 public class NotesProvider extends ContentProvider {
 
     private static final String AUTHORITY = "xyz.glucn.notebook.notesprovider";
@@ -33,44 +36,35 @@ public class NotesProvider extends ContentProvider {
         return true;
     }
 
-    @androidx.annotation.Nullable
+    @Nullable
     @Override
-    public Cursor query(@androidx.annotation.NonNull Uri _uri,
-                        @androidx.annotation.Nullable String[] _projection,
-                        @androidx.annotation.Nullable String selection,
-                        @androidx.annotation.Nullable String[] selectionArgs,
-                        @androidx.annotation.Nullable String _sortOrder) {
+    public Cursor query(@NonNull Uri _uri, @Nullable String[] _projection,
+                        @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String _sortOrder) {
         return database.query(DBOpenHelper.TABLE_NOTES, DBOpenHelper.ALL_COLUMNS,
                 selection, selectionArgs, null, null,
                 DBOpenHelper.NOTE_CREATED + " DESC");
     }
 
-    @androidx.annotation.Nullable
+    @Nullable
     @Override
-    public String getType(@androidx.annotation.NonNull Uri uri) {
+    public String getType(@NonNull Uri uri) {
         return null;
     }
 
-    @androidx.annotation.Nullable
+    @Nullable
     @Override
-    public Uri insert(@androidx.annotation.NonNull Uri _uri,
-                      @androidx.annotation.Nullable ContentValues values) {
+    public Uri insert(@NonNull Uri _uri, @Nullable ContentValues values) {
         long id = database.insert(DBOpenHelper.TABLE_NOTES, null, values);
         return Uri.parse(BASE_PATH + "/" + id);
     }
 
     @Override
-    public int delete(@androidx.annotation.NonNull Uri _uri,
-                      @androidx.annotation.Nullable String selection,
-                      @androidx.annotation.Nullable String[] selectionArgs) {
+    public int delete(@NonNull Uri _uri, @Nullable String selection, @Nullable String[] selectionArgs) {
         return database.delete(DBOpenHelper.TABLE_NOTES, selection, selectionArgs);
     }
 
     @Override
-    public int update(@androidx.annotation.NonNull Uri _uri,
-                      @androidx.annotation.Nullable ContentValues values,
-                      @androidx.annotation.Nullable String selection,
-                      @androidx.annotation.Nullable String[] selectionArgs) {
+    public int update(@NonNull Uri _uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
         return database.update(DBOpenHelper.TABLE_NOTES, values, selection, selectionArgs);
     }
 }

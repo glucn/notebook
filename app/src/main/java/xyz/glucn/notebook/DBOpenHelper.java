@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import androidx.annotation.Nullable;
+
 public class DBOpenHelper extends SQLiteOpenHelper {
 
     //Constants for db name and version
@@ -26,7 +28,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                     NOTE_CREATED + " TEXT default CURRENT_TIMESTAMP" +
                     ")";
 
-    DBOpenHelper(@androidx.annotation.Nullable Context context) {
+    DBOpenHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
