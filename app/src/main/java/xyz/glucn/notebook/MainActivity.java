@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.CursorAdapter;
+import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
@@ -20,17 +21,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity
 implements LoaderManager.LoaderCallbacks<Cursor>
 {
     private static final String TAG = "MainActivity";
     private CursorAdapter mCursorAdapter;
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +41,8 @@ implements LoaderManager.LoaderCallbacks<Cursor>
         mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, null, from, to, 0);
         LoaderManager.getInstance(this).initLoader(0, null, this);
 
-        mRecyclerView = findViewById(R.id.note_recycle_view);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new MyRecyclerAdapter(this, mCursorAdapter);
-        mRecyclerView.setAdapter(mAdapter);
+        ListView view = findViewById(R.id.note_list_view);
+        view.setAdapter(mCursorAdapter);
     }
 
     @Override
@@ -78,14 +70,14 @@ implements LoaderManager.LoaderCallbacks<Cursor>
         ContentValues values = new ContentValues();
         values.put(DBOpenHelper.NOTE_TEXT, note);
         Uri uri = getContentResolver().insert(NotesProvider.CONTENT_URI, values);
-        Log.i("MainActivity", "onCreate: data inserted " + uri.getLastPathSegment());
+        Log.i(TAG, "onCreate: data inserted " + uri.getLastPathSegment());
     }
 
     private void insertSampleData() {
         insertNote("Simple Note");
         insertNote("Multi-line\nnote");
         insertNote("Very very very very very very very very very very very long text");
-        // restartLoader();
+        restartLoader();
     }
 
     private void clearData() {
@@ -94,7 +86,7 @@ implements LoaderManager.LoaderCallbacks<Cursor>
             public void onClick(DialogInterface dialog, int which) {
                 if (which == DialogInterface.BUTTON_POSITIVE) {
                     getContentResolver().delete(NotesProvider.CONTENT_URI, null, null);
-
+                    restartLoader();
                     Toast.makeText(MainActivity.this, "Delete all notes", Toast.LENGTH_LONG).show();
                 }
             }
@@ -114,17 +106,20 @@ implements LoaderManager.LoaderCallbacks<Cursor>
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
+        Log.i(TAG, "onCreateLoader");
         return new CursorLoader(this, NotesProvider.CONTENT_URI, DBOpenHelper.ALL_COLUMNS,
                 null, null, null);
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
+        Log.i(TAG, "onLoadFinished");
         mCursorAdapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+        Log.i(TAG, "onLoaderReset");
         mCursorAdapter.swapCursor(null);
     }
 }
