@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,10 +34,7 @@ implements LoaderManager.LoaderCallbacks<Cursor>
 
         // insertNote("New Note");
 
-        String[] from = {DBOpenHelper.NOTE_TEXT};
-        int[] to = {R.id.note_list_item_text};
-
-        mCursorAdapter = new SimpleCursorAdapter(this, R.layout.note_list_item, null, from, to, 0);
+        mCursorAdapter = new NotesCursorAdapter(this, null, 0);
         LoaderManager.getInstance(this).initLoader(0, null, this);
 
         ListView view = findViewById(R.id.note_list_view);
