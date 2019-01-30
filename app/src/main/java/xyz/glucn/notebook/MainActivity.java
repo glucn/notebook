@@ -36,9 +36,9 @@ implements LoaderManager.LoaderCallbacks<Cursor>
         // insertNote("New Note");
 
         String[] from = {DBOpenHelper.NOTE_TEXT};
-        int[] to = {android.R.id.text1};
+        int[] to = {R.id.note_list_item_text};
 
-        mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, null, from, to, 0);
+        mCursorAdapter = new SimpleCursorAdapter(this, R.layout.note_list_item, null, from, to, 0);
         LoaderManager.getInstance(this).initLoader(0, null, this);
 
         ListView view = findViewById(R.id.note_list_view);
