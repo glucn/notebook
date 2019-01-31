@@ -133,4 +133,11 @@ implements LoaderManager.LoaderCallbacks<Cursor>
         Log.i(TAG, "onLoaderReset");
         mCursorAdapter.swapCursor(null);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == EDITOR_REQUEST_CODE && resultCode == RESULT_OK) {
+            restartLoader();
+        }
+    }
 }
