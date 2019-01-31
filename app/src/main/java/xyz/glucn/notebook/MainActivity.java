@@ -46,10 +46,7 @@ public class MainActivity extends AppCompatActivity
                 startActivityForResult(intent, EDITOR_REQUEST_CODE);
             }
         });
-
-        // insertNote("New Note");
-
-        mCursorAdapter = new NotesCursorAdapter(this, null, 0);
+        mCursorAdapter = new NotesCursorAdapter(this);
         LoaderManager.getInstance(this).initLoader(0, null, this);
 
         ListView view = findViewById(R.id.note_list_view);
@@ -90,8 +87,7 @@ public class MainActivity extends AppCompatActivity
     private void insertNote(String note) {
         ContentValues values = new ContentValues();
         values.put(DBOpenHelper.NOTE_TEXT, note);
-        Uri uri = getContentResolver().insert(NotesProvider.CONTENT_URI, values);
-        Log.i(TAG, "onCreate: data inserted " + uri.getLastPathSegment());
+        getContentResolver().insert(NotesProvider.CONTENT_URI, values);
     }
 
     private void insertSampleData() {

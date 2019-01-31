@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-public class NotesCursorAdapter extends CursorAdapter {
+class NotesCursorAdapter extends CursorAdapter {
 
-    NotesCursorAdapter(Context context, Cursor c, int flags) {
-        super(context, c, flags);
+    NotesCursorAdapter(Context context) {
+        super(context, null, 0);
     }
 
     @Override

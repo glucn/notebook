@@ -6,22 +6,14 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import org.jetbrains.annotations.NotNull;
 
 public class EditorActivity extends AppCompatActivity {
 
@@ -56,19 +48,11 @@ public class EditorActivity extends AppCompatActivity {
             if (cursor != null) {
                 cursor.moveToFirst();
                 oldText = cursor.getString(cursor.getColumnIndex(DBOpenHelper.NOTE_TEXT));
+                cursor.close();
             }
             editor.setText(oldText);
             editor.requestFocus();
         }
-
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
 
     @Override
