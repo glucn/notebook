@@ -40,10 +40,15 @@ public class NotesProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Cursor query(@NonNull Uri _uri, @Nullable String[] _projection,
-                        @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String _sortOrder) {
+    public Cursor query(@NonNull Uri uri, @Nullable String[] _projection,
+                        @Nullable String selection, @Nullable String[] _selectionArgs, @Nullable String _sortOrder) {
+
+        if (uriMatcher.match(uri) == NOTE_ID) {
+            selection = DBOpenHelper.NOTE_ID + "=" + uri.getLastPathSegment();
+        }
+
         return database.query(DBOpenHelper.TABLE_NOTES, DBOpenHelper.ALL_COLUMNS,
-                selection, selectionArgs, null, null,
+                selection, null, null, null,
                 DBOpenHelper.NOTE_CREATED + " DESC");
     }
 

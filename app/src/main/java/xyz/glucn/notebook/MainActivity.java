@@ -11,12 +11,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,7 +27,7 @@ import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
 public class MainActivity extends AppCompatActivity
-implements LoaderManager.LoaderCallbacks<Cursor>
+        implements LoaderManager.LoaderCallbacks<Cursor>
 {
     private static final String TAG = "MainActivity";
     private static final int EDITOR_REQUEST_CODE = 10001;
@@ -54,6 +54,16 @@ implements LoaderManager.LoaderCallbacks<Cursor>
 
         ListView view = findViewById(R.id.note_list_view);
         view.setAdapter(mCursorAdapter);
+
+        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, EditorActivity.class);
+                Uri uri = Uri.parse(NotesProvider.CONTENT_URI + "/" + id);
+                intent.putExtra(NotesProvider.CONTENT_ITEM_TYPE, uri);
+                startActivityForResult(intent, EDITOR_REQUEST_CODE);
+            }
+        });
     }
 
     @Override
