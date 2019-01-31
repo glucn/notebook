@@ -9,5 +9,5 @@
     <string name="note_updated">Note Updated</string>
     <string name="note_created">Note Created</string>
     <string name="action_delete">Delete</string>
-    <string name="input_note">Input note</string>
+    <string name="enter_note">Enter note here</string>
 </resources>

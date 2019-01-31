@@ -123,20 +123,17 @@ public class MainActivity extends AppCompatActivity
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        Log.i(TAG, "onCreateLoader");
         return new CursorLoader(this, NotesProvider.CONTENT_URI, DBOpenHelper.ALL_COLUMNS,
                 null, null, null);
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-        Log.i(TAG, "onLoadFinished");
         mCursorAdapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-        Log.i(TAG, "onLoaderReset");
         mCursorAdapter.swapCursor(null);
     }
 
