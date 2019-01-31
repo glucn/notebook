@@ -2,6 +2,7 @@ package xyz.glucn.notebook;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity
 implements LoaderManager.LoaderCallbacks<Cursor>
 {
     private static final String TAG = "MainActivity";
+    private static final int EDITOR_REQUEST_CODE = 10001;
     private CursorAdapter mCursorAdapter;
 
     @Override
@@ -40,8 +42,8 @@ implements LoaderManager.LoaderCallbacks<Cursor>
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(getApplicationContext(), EditorActivity.class);
+                startActivityForResult(intent, EDITOR_REQUEST_CODE);
             }
         });
 
